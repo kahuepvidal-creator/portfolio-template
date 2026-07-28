@@ -1,5 +1,6 @@
 import { Container } from '@/components/primitives/Container'
 import { FadeIn } from '@/components/primitives/FadeIn'
+import { LetterSwap } from '@/components/LetterSwap'
 
 // Seus projetos. Troque nome/descrição e coloque as imagens em /public/assets
 // (proporção 4:3). Adicione ou remova itens à vontade.
@@ -11,7 +12,7 @@ const projects = [
 
 export function Work() {
   return (
-    <section id="work" className="scroll-mt-24 py-20 md:py-28">
+    <section id="work" className="scroll-mt-24 py-20 md:pb-28 md:pt-[164px]">
       <Container>
         <div className="grid gap-12 md:grid-cols-[1fr_2fr] md:gap-16">
           {/* Coluna esquerda — travada no scroll */}
@@ -32,7 +33,7 @@ export function Work() {
                       ({p.n})
                     </span>
                     <h3 className="font-display text-h2 leading-none text-ink">
-                      {p.name}
+                      <LetterSwap text={p.name} />
                     </h3>
                   </div>
                   <div className="relative mt-6 aspect-[4/3] overflow-hidden rounded-card bg-paper-sunken">
@@ -42,7 +43,7 @@ export function Work() {
                       loading="lazy"
                       className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                     />
-                    <span className="absolute left-5 top-4 text-sm font-medium text-white [text-shadow:0_1px_5px_rgba(0,0,0,0.55)]">
+                    <span className="absolute bottom-4 left-4 rounded-pill bg-paper-raised/90 px-3 py-1.5 text-sm font-medium text-ink shadow-sm backdrop-blur">
                       {p.desc}
                     </span>
                   </div>

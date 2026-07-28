@@ -1,9 +1,10 @@
-import type { ReactNode } from 'react'
-import { Mail } from 'lucide-react'
+import { useState, type ReactNode } from 'react'
+import { Mail, Check } from 'lucide-react'
 import { Container } from '@/components/primitives/Container'
 import { FadeIn } from '@/components/primitives/FadeIn'
 import { tools } from '@/lib/tools'
 import { socials } from '@/lib/socials'
+import { PhotoCarousel } from '@/components/PhotoCarousel'
 
 // Sua experiência. Sem datas, só Now/Prev. Adicione ou remova itens à vontade.
 const experience = [
@@ -11,6 +12,47 @@ const experience = [
   { period: 'Prev.', role: 'Previous Role', company: 'Previous Company' },
   { period: 'Prev.', role: 'Earlier Role', company: 'Earlier Company' },
 ]
+
+// Fotos "off the clock". Coloque as suas em /public/assets/off e liste aqui.
+const offClockPhotos = [
+  '/assets/off/off-1.svg',
+  '/assets/off/off-2.svg',
+  '/assets/off/off-3.svg',
+]
+
+const EMAIL = 'you@example.com'
+
+// Botão de e-mail com copy-to-clipboard: clica, copia, e o ícone vira check
+// com preenchimento do accent, reseta em 1.8s.
+function CopyEmailIcon() {
+  const [copied, setCopied] = useState(false)
+
+  async function copy() {
+    try {
+      await navigator.clipboard.writeText(EMAIL)
+    } catch {
+      // navegadores sem clipboard API: mantém só o feedback visual
+    }
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1800)
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={copy}
+      aria-label={copied ? 'Email copied' : `Copy ${EMAIL}`}
+      title="Email"
+      className={`inline-flex size-9 items-center justify-center rounded-pill border transition-colors ${
+        copied
+          ? 'border-lime bg-lime text-lime-ink'
+          : 'border-line text-ink-muted hover:border-forest hover:text-forest'
+      }`}
+    >
+      {copied ? <Check className="size-4" /> : <Mail className="size-4" />}
+    </button>
+  )
+}
 
 function Card({
   label,
@@ -71,14 +113,7 @@ export function About() {
                     </svg>
                   </a>
                 ))}
-                <a
-                  href="mailto:you@example.com"
-                  aria-label="Email"
-                  title="Email"
-                  className="inline-flex size-9 items-center justify-center rounded-pill border border-line text-ink-muted transition-colors hover:border-forest hover:text-forest"
-                >
-                  <Mail className="size-4" />
-                </a>
+                <CopyEmailIcon />
               </div>
             </Card>
 
@@ -124,26 +159,28 @@ export function About() {
             <Card label="Tool stack">
               <div className="flex flex-wrap gap-3">
                 {tools.map((t) => (
-                  <div
-                    key={t.name}
-                    title={t.name}
-                    className="flex size-12 items-center justify-center rounded-xl bg-ink"
-                  >
-                    <svg
-                      viewBox="0 0 24 24"
-                      role="img"
-                      aria-label={t.name}
-                      className="size-6 fill-white"
-                    >
-                      <path d={t.path} />
-                    </svg>
+                  <div key={t.name} className="group relative">
+                    <div className="flex size-12 items-center justify-center rounded-lg bg-ink">
+                      <svg
+                        viewBox="0 0 24 24"
+                        role="img"
+                        aria-label={t.name}
+                        className="size-6 fill-white"
+                      >
+                        <path d={t.path} />
+                      </svg>
+                    </div>
+                    {/* balãozinho com o nome, sobe no hover */}
+                    <span className="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-pill bg-ink px-2.5 py-1 text-xs font-medium text-paper opacity-0 shadow-sm transition-all duration-200 group-hover:-translate-x-1/2 group-hover:translate-y-0 group-hover:opacity-100">
+                      {t.name}
+                    </span>
                   </div>
                 ))}
               </div>
             </Card>
           </FadeIn>
 
-          {/* Direita — experiência no topo, fotos preenchem até a base */}
+          {/* Direita — experiência no topo, carrossel de fotos até a base */}
           <FadeIn className="flex flex-col gap-4" delay={0.12}>
             <Card label="Experience">
               <ul className="flex flex-col gap-5">
@@ -158,16 +195,7 @@ export function About() {
             </Card>
 
             <Card label="Off the clock" className="flex flex-1 flex-col">
-              <div className="grid flex-1 grid-cols-2 gap-3">
-                {[0, 1, 2, 3].map((i) => (
-                  <div
-                    key={i}
-                    className="flex min-h-[110px] items-center justify-center rounded-md bg-paper-sunken"
-                  >
-                    <span className="label !text-ink-subtle">Photo</span>
-                  </div>
-                ))}
-              </div>
+              <PhotoCarousel photos={offClockPhotos} />
             </Card>
           </FadeIn>
         </div>

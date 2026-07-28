@@ -6,14 +6,17 @@ A clean, editorial, full-width portfolio built with React, Vite, TypeScript, Tai
 
 - **Full-width editorial layout** — off-white paper, dot grid, near-black ink, a single accent color.
 - **Sections included** — hero, selected work (sticky scroll), about (bento grid), contact.
-- **Fluid & responsive** — scales smoothly from mobile to desktop, no fixed breakpoints to fight.
-- **Motion built in** — subtle fade-ins on scroll via [Motion](https://motion.dev).
+- **Smooth scroll** — buttery page + anchor scrolling with [Lenis](https://lenis.dev) (respects reduced-motion).
+- **Animated mobile menu** — a hamburger that morphs into an X, with a slide-down panel.
+- **Photo carousel** — swipeable "off the clock" gallery with dots and 3s autoplay.
+- **Playful details** — hover letter-swap on project titles, tooltips on the tool stack.
 - **Copy-to-clipboard email**, brand social icons, and a résumé download button.
-- **Dark mode** tokens already defined (add a toggle if you want one).
+- **Fluid & responsive** — scales smoothly from mobile to desktop; dark-mode tokens included.
+- **Motion built in** — subtle fade-ins on scroll via [Motion](https://motion.dev).
 
 ## Tech stack
 
-React 19 · Vite · TypeScript · Tailwind CSS v4 (tokens in CSS, no config file) · Motion · lucide-react
+React 19 · Vite · TypeScript · Tailwind CSS v4 (tokens in CSS, no config file) · Motion · Lenis · lucide-react
 
 ## Getting started
 
@@ -41,6 +44,7 @@ All the content lives in a handful of files. No CMS, no database — just edit a
 | Hero intro & tagline | `src/components/sections/Hero.tsx` |
 | Projects (name, description, image) | `src/components/sections/Work.tsx` |
 | About: story, experience, photo, bubbles | `src/components/sections/About.tsx` |
+| "Off the clock" carousel photos | `src/components/sections/About.tsx` + `public/assets/off/` |
 | Contact: email & footer | `src/components/sections/Contact.tsx` |
 | Social links (Instagram, LinkedIn, YouTube) | `src/lib/socials.ts` |
 | Tool-stack icons | `src/lib/tools.ts` |
@@ -49,7 +53,7 @@ All the content lives in a handful of files. No CMS, no database — just edit a
 
 ### Images
 
-Drop your images in `public/assets/` and point to them from `Work.tsx` (project cards, 4:3 works best) and `About.tsx` (your portrait). The template ships with lightweight SVG placeholders you can delete.
+Drop your images in `public/assets/` and point to them from `Work.tsx` (project cards, 4:3 works best) and `About.tsx` (your portrait). For the "off the clock" carousel, add photos to `public/assets/off/` and list them in the `offClockPhotos` array in `About.tsx`. The template ships with lightweight SVG placeholders you can delete.
 
 ### Résumé
 

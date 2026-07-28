@@ -12,7 +12,7 @@ export function Hero() {
 
       <Container className="relative flex min-h-[92svh] flex-col items-center justify-center py-24 text-center">
         <FadeIn>
-          <h1 className="font-display text-display leading-[0.92] text-ink">
+          <h1 className="font-display text-display leading-[1.05] text-ink md:leading-[0.98]">
             <span className="block">
               hi, I'm <span className="italic">Your Name</span>
             </span>
